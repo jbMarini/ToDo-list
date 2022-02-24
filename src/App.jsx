@@ -5,11 +5,30 @@ import FilterButton from "./components/FilterButton";
 import { nanoid } from "nanoid";
 
 function App(props) {
+  
   function addTask(name) {
     const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
     setTasks([...tasks, newTask]);
   }
   const [tasks, setTasks] = useState(props.tasks);
+
+  function editTask(id, newName) {
+    const editedTaskList = tasks.map(task => {
+    // if this task has the same ID as the edited task
+      if (id === task.id) {
+        //
+        return {...task, name: newName}
+      }
+      return task;
+    });
+    setTasks(editedTaskList);
+  }
+
+  function deleteTask(id) {
+    const remainingTasks = tasks.filter(task => id !== task.id);
+    setTasks(remainingTasks);
+  }
+
   function toggleTaskCompleted(id) {
     const updatedTasks = tasks.map(task => {
       if (id === task.id) {
@@ -19,10 +38,7 @@ function App(props) {
     });
     setTasks(updatedTasks);
   }
-  function deleteTask(id) {
-    const remainingTasks = tasks.filter(task => id !== task.id);
-    setTasks(remainingTasks);
-  }
+
   const taskList = tasks.map(task => (
     <Todo
       id={task.id}
@@ -31,10 +47,14 @@ function App(props) {
       key={task.id}
       toggleTaskCompleted={toggleTaskCompleted}
       deleteTask={deleteTask}
+      editTask={editTask}
     />
   ));
+
   const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
+
   const headingText = `${taskList.length} ${tasksNoun} remaining`;
+  
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>

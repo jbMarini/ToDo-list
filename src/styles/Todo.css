@@ -1,0 +1,7 @@
+.stack-small{
+    display: flex;
+}
+
+.c-cb, .todo-label{
+    font-size: x-large;
+}

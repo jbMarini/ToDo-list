@@ -1,16 +1,8 @@
 import React, { useState } from 'react'
 
-const FILTER_MAP = {
-  All: () => true,
-  Active: (task) => !task.completed,
-  Completed: (task) => task.completed,
-}
-const FILTER_NAMES = Object.keys(FILTER_MAP)
-
 export default function Todo(props) {
   const [isEditing, setEditing] = useState(false)
   const [newName, setNewName] = useState('')
-  const [filter, setFilter] = useState('All')
 
   function handleChange(e) {
     setNewName(e.target.value)
